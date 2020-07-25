@@ -75,6 +75,9 @@ public class Main extends JavaPlugin{
 		MainInventoryClickListener mainInventoryClickListener = new MainInventoryClickListener();
 		Bukkit.getServer().getPluginManager().registerEvents(mainInventoryClickListener, plugin);
 		
+		MainDropItemListener mainDropItemListener = new MainDropItemListener();
+		Bukkit.getServer().getPluginManager().registerEvents(mainDropItemListener, plugin);
+		
 	}
 	
 	@Override
