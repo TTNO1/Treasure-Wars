@@ -203,11 +203,18 @@ public class GameTeam implements ConfigurationSerializable{
 	public String selectTreasureArea(Player player){
 		
 		if(player.getWorld().equals(game.getWorld())) {
-			Bukkit.getServer().getPluginManager().registerEvents(new TreasureAreaInteractListener(player, this), Main.getPlugin());
-			return ChatColor.DARK_PURPLE + "Please right click the corner blocks of the treasure area.";
+			if(game.getTreasureAreaListenerOf(player) == null) {
+				TreasureAreaInteractListener listener = new TreasureAreaInteractListener(player, this);
+				game.getTreasureAreaListeners().add(listener);
+				Bukkit.getServer().getPluginManager().registerEvents(listener, Main.getPlugin());
+			}else {
+				game.getTreasureAreaListenerOf(player).clear(true);
+			}
 		}else {
 			return ChatColor.RED + "You are in the wrong world, please go to world: " + ChatColor.WHITE + game.getWorld().getName() + ChatColor.RED + " to set the treasure area of this team.";
 		}
+		
+		return null;
 		
 	}
 	
@@ -218,8 +225,12 @@ public class GameTeam implements ConfigurationSerializable{
 		serializeMap.put("name", name);
 		serializeMap.put("color", color);
 		serializeMap.put("game", game.getName());
-		serializeMap.put("spawn", spawn.serialize());
-		serializeMap.put("treasureArea", treasureArea.serialize());
+		if(spawn != null) {
+			serializeMap.put("spawn", spawn.serialize());
+		}
+		if(treasureArea != null) {
+			serializeMap.put("treasureArea", treasureArea.serialize());
+		}
 		return serializeMap;
 		
 	}

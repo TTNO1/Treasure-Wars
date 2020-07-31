@@ -73,6 +73,7 @@ public class Game {
 	private ArrayList<ZombiePigman> zombiePigmans;
 	private BukkitRunnable timeTask;
 	private HashMap<Player, GameTeam> teamSelection;
+	private ArrayList<TreasureAreaInteractListener> treasureAreaListeners;
 	
 	@SuppressWarnings("unchecked")
 	Game(String name){
@@ -94,10 +95,6 @@ public class Game {
 		pointsEarned = new HashMap<Player, Integer>();
 		listenerClasses = new ArrayList<Class<?>>();
 		listenerObjects = new ArrayList<Object>();
-		ores = new ArrayList<Ore>();
-		teams = new ArrayList<GameTeam>();
-		merchants = new ArrayList<Merchant>();
-		captains = new ArrayList<Captain>();
 		compasses = new ArrayList<Compass>();
 		eyesOfSaline = new ArrayList<EyeOfSaline>();
 		drowners = new ArrayList<Drowner>();
@@ -105,12 +102,32 @@ public class Game {
 		zombiePigmans = new ArrayList<ZombiePigman>();
 		lobbyEntity = (LobbyEntity) config.get("lobbyEntity");
 		teamSelection = new HashMap<Player, GameTeam>();
+		treasureAreaListeners = new ArrayList<TreasureAreaInteractListener>();
 		
-		ores = (ArrayList<Ore>) config.get("ores");
-		teams = (ArrayList<GameTeam>) config.getList("teams");
-		merchants = (ArrayList<Merchant>) config.getList("merchants");
-		captains = (ArrayList<Captain>) config.getList("captains");
-
+		if(config.isSet("ores")) {
+			ores = (ArrayList<Ore>) config.get("ores");
+		}else {
+			ores = new ArrayList<Ore>();
+		}
+		
+		if(config.isSet("teams")) {
+			teams = (ArrayList<GameTeam>) config.getList("teams");
+		}else {
+			teams = new ArrayList<GameTeam>();
+		}
+		
+		if(config.isSet("merchants")) {
+			merchants = (ArrayList<Merchant>) config.getList("merchants");
+		}else {
+			merchants = new ArrayList<Merchant>();
+		}
+		
+		if(config.isSet("captains")) {
+			captains = (ArrayList<Captain>) config.getList("captains");
+		}else {
+			captains = new ArrayList<Captain>();
+		}
+		
 		if(teams != null) {
 			maxPlayers = playersPerTeam * teams.size();
 		}else {
@@ -196,6 +213,22 @@ public class Game {
 	
 	public LobbyEntity getLobbyEntity() {
 		return lobbyEntity;
+	}
+	
+	public ArrayList<TreasureAreaInteractListener> getTreasureAreaListeners() {
+		return treasureAreaListeners;
+	}
+	
+	public TreasureAreaInteractListener getTreasureAreaListenerOf(Player player) {
+		
+		for(TreasureAreaInteractListener listener : treasureAreaListeners) {
+			if(listener.getPlayer().equals(player)) {
+				return listener;
+			}
+		}
+		
+		return null;
+		
 	}
 	
 	public EyeOfSaline getEyeOfSalineOf(Player player) {

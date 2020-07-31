@@ -48,7 +48,7 @@ public class MainCommand implements CommandExecutor {
 		case "newteam" :
 			if(player.hasPermission("treasurewars.newteam")) {
 				if(args.length >= 4) {
-					player.sendMessage(game.newTeam(args[1], args[2]));
+					player.sendMessage(game.newTeam(args[2], args[3]));
 				}else {
 					player.sendMessage(ChatColor.GOLD + "/tw newteam [Game Name] [Team Name] [Team Color (Dye Color)]");
 				}

@@ -9,30 +9,34 @@ import org.bukkit.command.TabCompleter;
 
 public class MainCommandTabComplete implements TabCompleter {
 	
+	private static ArrayList<String> commandList = new ArrayList<String>();
+	
+	static {
+		commandList.add("newgame");
+		commandList.add("newteam");
+		commandList.add("oreplacemode");
+		commandList.add("setspawn");
+		commandList.add("settreasurearea");
+		commandList.add("setlobby");
+		commandList.add("setlobbyentity");
+		commandList.add("newmerchant");
+		commandList.add("newcaptain");
+		commandList.add("removemerchant");
+		commandList.add("removecaptain");
+		commandList.add("removeteam");
+		commandList.add("deletegame");
+		commandList.add("updateworld");
+		commandList.add("joingame");
+		commandList.add("startgame");
+		commandList.add("disablegame");
+		commandList.add("help");
+		commandList.add("setup");
+	}
+	
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
 		
 		ArrayList<String> list = new ArrayList<String>();
-		
-		list.add("newgame");
-		list.add("newteam");
-		list.add("oreplacemode");
-		list.add("setspawn");
-		list.add("settreasurearea");
-		list.add("setlobby");
-		list.add("setlobbyentity");
-		list.add("newmerchant");
-		list.add("newcaptain");
-		list.add("removemerchant");
-		list.add("removecaptain");
-		list.add("removeteam");
-		list.add("deletegame");
-		list.add("updateworld");
-		list.add("joingame");
-		list.add("startgame");
-		list.add("disablegame");
-		list.add("help");
-		list.add("setup");
 		
 		if(args.length > 1) {
 			return null;
@@ -40,10 +44,10 @@ public class MainCommandTabComplete implements TabCompleter {
 		
 		if(args.length == 1) {
 			
-			for(String string : list) {
+			for(String string : commandList) {
 				
-				if(!string.startsWith(args[0])) {
-					list.remove(string);
+				if(string.startsWith(args[0])) {
+					list.add(string);
 				}
 				
 			}

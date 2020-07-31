@@ -7,6 +7,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.util.Vector;
 
 public class TreasureAreaInteractListener implements Listener{
@@ -20,6 +21,7 @@ public class TreasureAreaInteractListener implements Listener{
 		
 		this.player = player;
 		this.team = team;
+		player.sendMessage(ChatColor.DARK_PURPLE + "Please right-click on the corners of the Treasure Area.");
 		
 	}
 	
@@ -28,7 +30,7 @@ public class TreasureAreaInteractListener implements Listener{
 		
 		if(event.getPlayer().equals(player)) {
 			if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-				if(event.getClickedBlock().getWorld().equals(team.getGame().getWorld())) {
+				if(event.getHand().equals(EquipmentSlot.HAND)) {
 					if(coord1 == null) {
 						coord1 = event.getClickedBlock().getLocation().toVector();
 						event.getPlayer().sendMessage(ChatColor.DARK_PURPLE + "First corner set.");
@@ -36,14 +38,28 @@ public class TreasureAreaInteractListener implements Listener{
 						coord2 = event.getClickedBlock().getLocation().toVector();
 						team.setTreasureArea(new Area(coord1, coord2, event.getClickedBlock().getWorld().getName()));
 						event.getPlayer().sendMessage(ChatColor.GREEN + "Treasure area has been set successfully.");
-						HandlerList.unregisterAll(this);
+						clear(false);
 					}
-				}else {
-					event.getPlayer().sendMessage(ChatColor.RED + "The block you clicked is in the wrong world, treasure area has not been set.");
-					HandlerList.unregisterAll(this);
 				}
 			}
+		
 		}
+	}
+	
+	public void clear(boolean msg) {
+		
+		if(msg) {
+			player.sendMessage(ChatColor.RED + "Treasure Area selection cancelled.");
+		}
+		
+		HandlerList.unregisterAll(this);
+		team.getGame().getTreasureAreaListeners().remove(this);
+		
+	}
+	
+	public Player getPlayer() {
+		
+		return player;
 		
 	}
 	
