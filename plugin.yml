@@ -1,0 +1,14 @@
+name: Treasure-Wars
+main: me.ttno1.treasurewars.Main
+version: 1.0
+api-version: 1.15
+softdepend: [Multiverse-Core]
+author: TTNO1
+commands:    
+    tw:
+      description: Treasure Wars main Command
+      usage: /<command> help
+      aliases: [treasurewars]
+    leave:
+      description: Optional command to leave a game
+      usage: /<command>
