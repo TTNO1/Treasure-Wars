@@ -77,7 +77,6 @@ public class Game {
 	@SuppressWarnings("unchecked")
 	Game(String name){
 		Main.getGames().add(this);
-		Main.getPlugin().getLogger().info(Main.getGames().toString());
 		this.name = name;
 		file = new File(Main.getPlugin().getDataFolder() + File.separator + "games" + File.separator + name + ".yml");
 		config = YamlConfiguration.loadConfiguration(file);
