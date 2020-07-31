@@ -78,9 +78,9 @@ public class Game {
 	Game(String name){
 		Main.getGames().add(this);
 		this.name = name;
+		state = GameState.QUEUE;
 		file = new File(Main.getPlugin().getDataFolder() + File.separator + "games" + File.separator + name + ".yml");
 		config = YamlConfiguration.loadConfiguration(file);
-		state = GameState.QUEUE;
 		duration = config.getDouble("duration");
 		playersPerTeam = config.getInt("playersPerTeam");
 		maxPoints = config.getInt("maxPoints");
