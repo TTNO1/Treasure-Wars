@@ -12,10 +12,6 @@ public class MainCommandTabComplete implements TabCompleter {
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
 		
-		if(args.length > 1) {
-			return null;
-		}
-		
 		ArrayList<String> list = new ArrayList<String>();
 		
 		list.add("newgame");
@@ -37,6 +33,22 @@ public class MainCommandTabComplete implements TabCompleter {
 		list.add("disablegame");
 		list.add("help");
 		list.add("setup");
+		
+		if(args.length > 1) {
+			return null;
+		}
+		
+		if(args.length == 1) {
+			
+			for(String string : list) {
+				
+				if(!string.startsWith(args[0])) {
+					list.remove(string);
+				}
+				
+			}
+			
+		}
 		
 		return list;
 		
