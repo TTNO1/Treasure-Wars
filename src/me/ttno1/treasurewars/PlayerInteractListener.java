@@ -17,7 +17,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class PlayerInteractListener implements Listener{
 
 	private Game game;
-	private static int puppetRange = Main.getPlugin().getConfig().getInt("voodooPuppetRange");
+	private final static int puppetRange = Main.getPlugin().getConfig().getInt("voodooPuppetRange");
 	private int counter;
 	private Block block;
 	

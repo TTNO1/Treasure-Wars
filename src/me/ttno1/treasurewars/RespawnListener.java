@@ -17,6 +17,7 @@ public class RespawnListener implements Listener {
 
 	private Game game;
 	private int timer;
+	private final static int respawnTime = Main.getPlugin().getConfig().getInt("respawnTime");
 	
 	public static ArrayList<Material> keepItems = new ArrayList<Material>();
 	static {
@@ -65,7 +66,7 @@ public class RespawnListener implements Listener {
 			
 			event.getPlayer().getInventory().addItem(Utils.customItem(Material.WOODEN_SWORD, 1, null, null, game.getTeamOf(event.getPlayer()).getUpgradeEnchant(Upgrade.SHARPNESS), game.getTeamOf(event.getPlayer()).getUpgradeLevel(Captain.Upgrade.SHARPNESS), null, false, false));
 			
-			timer = Main.getPlugin().getConfig().getInt("respawnTime");
+			timer = respawnTime;
 			
 			BukkitRunnable task = new BukkitRunnable() {
 				public void run() {

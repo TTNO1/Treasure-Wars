@@ -13,8 +13,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class PlayerMoveListener implements Listener {
 
 	Game game;
-	private static int seaLevel = Main.getPlugin().getConfig().getInt("seaLevel");
-	private static int cooldownTime = Main.getPlugin().getConfig().getInt("lootCooldownTime");
+	private final static int seaLevel = Main.getPlugin().getConfig().getInt("seaLevel");
+	private final static int cooldownTime = Main.getPlugin().getConfig().getInt("lootCooldownTime");
 	
 	public PlayerMoveListener(Game game) {
 		this.game = game;

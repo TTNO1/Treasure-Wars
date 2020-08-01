@@ -81,15 +81,15 @@ public class Merchant implements ConfigurationSerializable{
 	}
 	
 	@SuppressWarnings("unchecked")
-	protected static HashMap<String, Integer> blocksPrices = (HashMap<String, Integer>) Main.getPlugin().getConfig().getMapList("blocks");
+	protected final static HashMap<String, Integer> blocksPrices = (HashMap<String, Integer>) Main.getPlugin().getConfig().get("blocks");
 	@SuppressWarnings("unchecked")
-	protected static HashMap<String, Integer> weaponsPrices = (HashMap<String, Integer>) Main.getPlugin().getConfig().getMapList("weapons");
+	protected final static HashMap<String, Integer> weaponsPrices = (HashMap<String, Integer>) Main.getPlugin().getConfig().get("weapons");
 	@SuppressWarnings("unchecked")
-	protected static HashMap<String, Integer> armorPrices = (HashMap<String, Integer>) Main.getPlugin().getConfig().getMapList("armor");
+	protected final static HashMap<String, Integer> armorPrices = (HashMap<String, Integer>) Main.getPlugin().getConfig().get("armor");
 	@SuppressWarnings("unchecked")
-	protected static HashMap<String, Integer> toolsPrices = (HashMap<String, Integer>) Main.getPlugin().getConfig().getMapList("tools");
+	protected final static HashMap<String, Integer> toolsPrices = (HashMap<String, Integer>) Main.getPlugin().getConfig().get("tools");
 	@SuppressWarnings("unchecked")
-	protected static HashMap<String, Integer> magicPrices = (HashMap<String, Integer>) Main.getPlugin().getConfig().getMapList("magic");
+	protected final static HashMap<String, Integer> magicPrices = (HashMap<String, Integer>) Main.getPlugin().getConfig().get("magic");
 	
 	public static void openGui(Player player, MerchantPage page) {
 		

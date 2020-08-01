@@ -18,6 +18,7 @@ public class ZombiePigman {
 	private int counter;
 	private int time;
 	private BukkitRunnable task;
+	private final static int range = Main.getPlugin().getConfig().getInt("zombiePigmanRange");
 	
 	ZombiePigman(GameTeam team, Game game, Location spawnLoc){
 		this.team = team;
@@ -45,8 +46,8 @@ public class ZombiePigman {
 					counter++;
 				}
 				if(pigman.getTarget() == null) {
-					if(!game.getTeamOf(Utils.getNearestPlayer(pigman, 10)).equals(team)) {
-						pigman.setTarget((LivingEntity) Utils.getNearestPlayer(pigman, 10));
+					if(!game.getTeamOf(Utils.getNearestPlayer(pigman, range)).equals(team)) {
+						pigman.setTarget((LivingEntity) Utils.getNearestPlayer(pigman, range));
 					}
 				}
 			}

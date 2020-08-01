@@ -9,7 +9,7 @@ public class Drowner {
 	private Game game;
 	private Player player;
 	private BukkitRunnable task;
-	private static int drownTime = Main.getPlugin().getConfig().getInt("drownTime");
+	private final static int drownTime = Main.getPlugin().getConfig().getInt("drownTime");
 	
 	Drowner(Game game, Player player) {
 		

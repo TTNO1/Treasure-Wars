@@ -71,7 +71,7 @@ public class Captain implements ConfigurationSerializable{
 	//GUI
 	
 	@SuppressWarnings("unchecked")
-	protected static HashMap<String, Integer> prices = (HashMap<String, Integer>) Main.getPlugin().getConfig().getMapList("captain");
+	protected final static HashMap<String, Integer> prices = (HashMap<String, Integer>) Main.getPlugin().getConfig().get("captain");
 	
 	public static void openGui(Player player, GameTeam team) {
 		

@@ -15,6 +15,7 @@ public class Ore implements ConfigurationSerializable{
 	private Material type;
 	private Material ingot;
 	private Game game;
+	private int respawnTime;
 	
 	Ore(LazyLocation location, Material type, Game game){
 		
@@ -25,12 +26,15 @@ public class Ore implements ConfigurationSerializable{
 		switch(type) {
 		case IRON_ORE:
 			ingot = Material.IRON_INGOT;
+			respawnTime = Main.getPlugin().getConfig().getInt("ironRespawnTime");
 			break;
 		case GOLD_ORE:
 			ingot = Material.GOLD_INGOT;
+			respawnTime = Main.getPlugin().getConfig().getInt("goldRespawnTime");
 			break;
 		case DIAMOND_ORE:
 			ingot = Material.DIAMOND;
+			respawnTime = Main.getPlugin().getConfig().getInt("diamondRespawnTime");
 			break;
 		default:
 			break;
@@ -44,25 +48,8 @@ public class Ore implements ConfigurationSerializable{
 	
 	public void breakOre(Player player) {
 		
-		int respawnTime;
-		
 		game.getWorld().getBlockAt(location.toLocation()).setType(Material.BEDROCK);
 		player.getInventory().addItem(new ItemStack(ingot, game.getTeamOf(player).getUpgradeLevel(Captain.Upgrade.FORTUNE) + 1));
-		
-		switch(type) {
-		case IRON_ORE:
-			respawnTime = Main.getPlugin().getConfig().getInt("ironRespawnTime");
-			break;
-		case GOLD_ORE:
-			respawnTime = Main.getPlugin().getConfig().getInt("goldRespawnTime");
-			break;
-		case DIAMOND_ORE:
-			respawnTime = Main.getPlugin().getConfig().getInt("diamondRespawnTime");
-			break;
-		default:
-			respawnTime = 1;
-			break;
-		}
 		
 		BukkitRunnable respawn = new BukkitRunnable() {
 			@Override
