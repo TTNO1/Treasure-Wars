@@ -26,7 +26,7 @@ public class PlayerInteractListener implements Listener{
 	}
 	
 	@SuppressWarnings("deprecation")
-	@EventHandler (ignoreCancelled = true)
+	@EventHandler (ignoreCancelled = false)
     public void onPlayerInteract(PlayerInteractEvent event) {
 		if(event.getPlayer().getWorld().equals(game.getWorld())) {
 			if(event.getHand().equals(EquipmentSlot.HAND)) {
@@ -90,7 +90,7 @@ public class PlayerInteractListener implements Listener{
 						BukkitRunnable task = new BukkitRunnable() {
 							@Override
 							public void run() {
-								if(block.getType().equals(Material.AIR)) {
+								if(block.getType().equals(Material.AIR) || block.getType().equals(Material.WATER)) {
 									block.setType(Material.OAK_PLANKS);
 								}
 								counter++;

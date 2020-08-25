@@ -29,29 +29,32 @@ public class GameTeam implements ConfigurationSerializable{
 	private int points;
 	private DyeColor dyeColor;
 	
-	GameTeam(String name, String color, Game game){
+	GameTeam(String name, String color, Game game, LazyLocation spawn, Area treasureArea){
 		
 		this.name = name;
 		this.color = color.toUpperCase();
 		this.game = game;
 		points = 0;
-		
 		dyeColor = DyeColor.valueOf(color);
 		chatColor = Utils.getChatColor(dyeColor);
 		players = new ArrayList<Player>();
 		upgradeLevels = new HashMap<Captain.Upgrade, Integer>();
 		upgradeEnchants = new HashMap<Captain.Upgrade, Enchantment>();
+		this.spawn = spawn;
+		this.treasureArea = treasureArea;
 		
 		for(Captain.Upgrade upgrade : Captain.Upgrade.values()) {
 			upgradeLevels.put(upgrade, 0);
 			upgradeEnchants.put(upgrade, null);
 		}
 		
+
+		
 	}
 	
 	public static GameTeam deserialize(Map<String, Object> map){
 		
-		return new GameTeam((String) map.get("name"), (String) map.get("color"), Main.getGame((String) map.get("game")));
+		return new GameTeam((String) map.get("name"), (String) map.get("color"), Main.getGame((String) map.get("game")), (LazyLocation) map.get("spawn"), (Area) map.get("treasureArea"));
 		
 	}
 
@@ -79,7 +82,8 @@ public class GameTeam implements ConfigurationSerializable{
 	
 	public void setTreasureArea(Area area){
 		treasureArea = area;
-		game.getConfig().set("teams." + name + ".treasureArea", area);
+		game.getConfig().set("teams", game.getTeams());
+		game.saveConfig();
 	}
 	
 	public int getUpgradeLevel(Captain.Upgrade upgrade) {
@@ -131,7 +135,7 @@ public class GameTeam implements ConfigurationSerializable{
 			return ingotsTaken;
 		}else {
 			points = points - number;
-			return number / 20;
+			return (int) Math.floor(number / 20);
 		}
 		
 	}
@@ -163,8 +167,9 @@ public class GameTeam implements ConfigurationSerializable{
 		
 		if(spawn.getWorld().equals(game.getWorld())) {
 			this.spawn = spawn;
-			game.getConfig().set("teams." + name + ".spawn", spawn);
-			return ChatColor.GREEN + "Successfully set spawn of team: " + chatColor + name + ChatColor.GREEN + " to your location.";
+			game.getConfig().set("teams", game.getTeams());
+			game.saveConfig();
+			return ChatColor.GREEN + "Spawn set successfully.";
 		}else {
 			return ChatColor.RED + "You are in the wrong world, please go to world: " + ChatColor.WHITE + game.getWorld().getName() + ChatColor.RED + " to set the spawn of this team.";
 		}
@@ -226,10 +231,10 @@ public class GameTeam implements ConfigurationSerializable{
 		serializeMap.put("color", color);
 		serializeMap.put("game", game.getName());
 		if(spawn != null) {
-			serializeMap.put("spawn", spawn.serialize());
+			serializeMap.put("spawn", spawn);
 		}
 		if(treasureArea != null) {
-			serializeMap.put("treasureArea", treasureArea.serialize());
+			serializeMap.put("treasureArea", treasureArea);
 		}
 		return serializeMap;
 		

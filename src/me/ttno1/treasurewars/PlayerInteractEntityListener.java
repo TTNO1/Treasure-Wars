@@ -15,7 +15,7 @@ public class PlayerInteractEntityListener implements Listener{
 		this.game = game;
 	}
 	
-	@EventHandler
+	@EventHandler (ignoreCancelled = true)
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
 		
 		if(event.getRightClicked().getWorld().equals(game.getWorld())) {

@@ -24,6 +24,11 @@ public class MainCommand implements CommandExecutor {
 			return true;
 		}
 		
+		if(args.length == 0) {
+			player.sendMessage(ChatColor.GOLD + "/tw help");
+			return true;
+		}
+		
 		if(args.length > 1) {
 			if(!args[0].equals("newgame")) {
 				if(Main.getGame(args[1]) == null) {
@@ -43,6 +48,8 @@ public class MainCommand implements CommandExecutor {
 				}else {
 					player.sendMessage(ChatColor.GOLD + "/tw newgame [Game Name] [Players Per Team] [Game Duration ex. 6.3 = 6min 30sec] [Maximum Points]");
 				}
+			}else {
+				player.sendMessage(ChatColor.RED + "You do not have permission to use that command.");
 			}
 			break;
 		case "newteam" :
@@ -52,6 +59,8 @@ public class MainCommand implements CommandExecutor {
 				}else {
 					player.sendMessage(ChatColor.GOLD + "/tw newteam [Game Name] [Team Name] [Team Color (Dye Color)]");
 				}
+			}else {
+				player.sendMessage(ChatColor.RED + "You do not have permission to use that command.");
 			}
 			break;
 		case "setqueue" :
@@ -61,6 +70,8 @@ public class MainCommand implements CommandExecutor {
 				}else {
 					player.sendMessage(ChatColor.GOLD + "/tw setqueue [Game Name]");
 				}
+			}else {
+				player.sendMessage(ChatColor.RED + "You do not have permission to use that command.");
 			}
 			break;
 		case "oreplacemode" :
@@ -70,6 +81,8 @@ public class MainCommand implements CommandExecutor {
 				}else {
 					player.sendMessage(ChatColor.GOLD + "/tw oreplacemode [Game Name]");
 				}
+			}else {
+				player.sendMessage(ChatColor.RED + "You do not have permission to use that command.");
 			}
 			break;
 		case "setspawn" :
@@ -83,6 +96,8 @@ public class MainCommand implements CommandExecutor {
 				}else {
 					player.sendMessage(ChatColor.GOLD + "/tw setspawn [Game Name] [Team Name]");
 				}
+			}else {
+				player.sendMessage(ChatColor.RED + "You do not have permission to use that command.");
 			}
 			break;
 		case "settreasurearea" :
@@ -96,6 +111,8 @@ public class MainCommand implements CommandExecutor {
 				}else {
 					player.sendMessage(ChatColor.GOLD + "/tw settreasurearea [Game Name] [Team Name]");
 				}
+			}else {
+				player.sendMessage(ChatColor.RED + "You do not have permission to use that command.");
 			}
 			break;
 		case "setlobby" :
@@ -105,6 +122,8 @@ public class MainCommand implements CommandExecutor {
 				}else {
 					player.sendMessage(ChatColor.GOLD + "/tw setlobby [Game Name]");
 				}
+			}else {
+				player.sendMessage(ChatColor.RED + "You do not have permission to use that command.");
 			}
 			break;
 		case "newmerchant" :
@@ -114,6 +133,8 @@ public class MainCommand implements CommandExecutor {
 				}else {
 					player.sendMessage(ChatColor.GOLD + "/tw newmerchant [Game Name] [Merchant Name]");
 				}
+			}else {
+				player.sendMessage(ChatColor.RED + "You do not have permission to use that command.");
 			}
 			break;
 		case "newcaptain" :
@@ -123,6 +144,8 @@ public class MainCommand implements CommandExecutor {
 				}else {
 					player.sendMessage(ChatColor.GOLD + "/tw newcaptain [Game Name] [Captain Name]");
 				}
+			}else {
+				player.sendMessage(ChatColor.RED + "You do not have permission to use that command.");
 			}
 			break;
 		case "setlobbyentity" :
@@ -139,6 +162,8 @@ public class MainCommand implements CommandExecutor {
 				}else {
 					player.sendMessage(ChatColor.GOLD + "/tw setlobbyentity [Game Name] [Villager Name]");
 				}
+			}else {
+				player.sendMessage(ChatColor.RED + "You do not have permission to use that command.");
 			}
 			break;
 		case "removemerchant" :
@@ -148,6 +173,8 @@ public class MainCommand implements CommandExecutor {
 				}else {
 					player.sendMessage(ChatColor.GOLD + "/tw removemerchant [Game Name] [Merchant Name]");
 				}
+			}else {
+				player.sendMessage(ChatColor.RED + "You do not have permission to use that command.");
 			}
 			break;
 		case "removecaptain" :
@@ -157,6 +184,8 @@ public class MainCommand implements CommandExecutor {
 				}else {
 					player.sendMessage(ChatColor.GOLD + "/tw removecaptain [Game Name] [Captain Name]");
 				}
+			}else {
+				player.sendMessage(ChatColor.RED + "You do not have permission to use that command.");
 			}
 			break;
 		case "removeteam" :
@@ -166,6 +195,8 @@ public class MainCommand implements CommandExecutor {
 				}else {
 					player.sendMessage(ChatColor.GOLD + "/tw removeteam [Game Name] [Tean Name]");
 				}
+			}else {
+				player.sendMessage(ChatColor.RED + "You do not have permission to use that command.");
 			}
 			break;
 		case "deletegame" :
@@ -175,6 +206,8 @@ public class MainCommand implements CommandExecutor {
 				}else {
 					player.sendMessage(ChatColor.GOLD + "/tw deletegame [Game Name]");
 				}
+			}else {
+				player.sendMessage(ChatColor.RED + "You do not have permission to use that command.");
 			}
 			break;
 		case "updateworld" :
@@ -184,6 +217,8 @@ public class MainCommand implements CommandExecutor {
 				}else {
 					player.sendMessage(ChatColor.GOLD + "/tw updateworld [Game Name]");
 				}
+			}else {
+				player.sendMessage(ChatColor.RED + "You do not have permission to use that command.");
 			}
 			break;
 		case "joingame" :
@@ -193,6 +228,8 @@ public class MainCommand implements CommandExecutor {
 				}else {
 					player.sendMessage(ChatColor.GOLD + "/tw joingame [Game Name]");
 				}
+			}else {
+				player.sendMessage(ChatColor.RED + "You do not have permission to use that command.");
 			}
 			break;
 		case "startgame" :
@@ -202,6 +239,8 @@ public class MainCommand implements CommandExecutor {
 				}else {
 					player.sendMessage(ChatColor.GOLD + "/tw startgame [Game Name]");
 				}
+			}else {
+				player.sendMessage(ChatColor.RED + "You do not have permission to use that command.");
 			}
 			break;
 		case "leavegame" :
@@ -211,6 +250,8 @@ public class MainCommand implements CommandExecutor {
 				}else {
 					player.sendMessage(ChatColor.GOLD + "/tw leavegame [Game Name]");
 				}
+			}else {
+				player.sendMessage(ChatColor.RED + "You do not have permission to use that command.");
 			}
 			break;
 		case "disablegame" :
@@ -220,6 +261,8 @@ public class MainCommand implements CommandExecutor {
 				}else {
 					player.sendMessage(ChatColor.GOLD + "/tw disablegame [Game Name]");
 				}
+			}else {
+				player.sendMessage(ChatColor.RED + "You do not have permission to use that command.");
 			}
 			break;
 		case "help" :
@@ -227,10 +270,12 @@ public class MainCommand implements CommandExecutor {
 				if(args.length >= 1) {
 					TextComponent url = new TextComponent("https://github.com/TTNO1/Treasure-Wars/wiki");
 					url.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/TTNO1/Treasure-Wars/wiki"));
-					player.sendMessage("For help with Treasure Wars please visit the wiki: " + url);
+					player.spigot().sendMessage(new TextComponent("For help with Treasure Wars please visit the wiki: "), url);
 				}else {
 					player.sendMessage(ChatColor.GOLD + "/tw help");
 				}
+			}else {
+				player.sendMessage(ChatColor.RED + "You do not have permission to use that command.");
 			}
 			break;
 		case "setup" :
@@ -240,6 +285,8 @@ public class MainCommand implements CommandExecutor {
 				}else {
 					player.sendMessage(ChatColor.RED + "Please finish or cancel the current setup first.");
 				}
+			}else {
+				player.sendMessage(ChatColor.RED + "You do not have permission to use that command.");
 			}
 			break;
 		case "next" :

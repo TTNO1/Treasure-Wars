@@ -9,7 +9,7 @@ public class EntitySpawnListener implements Listener {
 
 	private Game game;
 	
-	EntitySpawnListener(Game game) {
+	public EntitySpawnListener(Game game) {
 		
 		this.game = game;
 		

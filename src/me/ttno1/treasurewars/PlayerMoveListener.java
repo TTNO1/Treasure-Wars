@@ -15,6 +15,7 @@ public class PlayerMoveListener implements Listener {
 	Game game;
 	private final static int seaLevel = Main.getPlugin().getConfig().getInt("seaLevel");
 	private final static int cooldownTime = Main.getPlugin().getConfig().getInt("lootCooldownTime");
+	private final static int lootAmount = Main.getPlugin().getConfig().getInt("lootAmount");
 	
 	public PlayerMoveListener(Game game) {
 		this.game = game;
@@ -63,7 +64,7 @@ public class PlayerMoveListener implements Listener {
 						}
 					}else {
 						if(!game.getLootCooldown().contains(player)) {
-							player.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, team.takePoints(200)));
+							player.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, team.takePoints((int) (lootAmount + (lootAmount * (game.getTeamOf(player).getUpgradeLevel(Captain.Upgrade.LOOTING) * .25))))));
 							game.getLootCooldown().add(player);
 							BukkitRunnable task = new BukkitRunnable() {
 								@Override

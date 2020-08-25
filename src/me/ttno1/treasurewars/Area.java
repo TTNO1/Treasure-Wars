@@ -62,8 +62,8 @@ public class Area implements ConfigurationSerializable{
 	public HashMap<String, Object> serialize() {
 		
 		HashMap<String, Object> serializeMap = new HashMap<String, Object>();
-		serializeMap.put("minCoord", minCoord.serialize());
-		serializeMap.put("maxCoord", maxCoord.serialize());
+		serializeMap.put("minCoord", minCoord);
+		serializeMap.put("maxCoord", maxCoord);
 		serializeMap.put("world", worldName);
 		return serializeMap;
 		

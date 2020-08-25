@@ -29,10 +29,20 @@ public class Compass {
 		
 	}
 	
-	public void clear() {
+	public void cancel() {
 		
 		task.cancel();
-		player.setCompassTarget(game.getTeamOf(player).getSpawn().toLocation());
+		if(player.getBedSpawnLocation() != null) {
+			player.setCompassTarget(player.getBedSpawnLocation());
+		}else {
+			player.setCompassTarget(game.getTeamOf(player).getSpawn().toLocation());
+		}
+		
+	}
+	
+	public void clear() {
+		
+		cancel();
 		game.getCompasses().remove(this);
 		
 	}

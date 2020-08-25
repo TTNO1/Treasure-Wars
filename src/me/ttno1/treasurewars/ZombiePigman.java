@@ -71,9 +71,13 @@ public class ZombiePigman {
 		
 	}
 	
-	void clear() {
+	public void cancel() {
 		task.cancel();
 		pigman.remove();
+	}
+	
+	public void clear() {
+		cancel();
 		game.getZombiePigmans().remove(this);
 	}
 	

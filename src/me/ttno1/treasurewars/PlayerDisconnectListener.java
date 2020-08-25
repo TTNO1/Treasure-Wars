@@ -13,5 +13,9 @@ public class PlayerDisconnectListener implements Listener{
 			Main.getGameOf(event.getPlayer()).leaveGame(event.getPlayer());
 		}
 		
+		if(Main.getSetupOf(event.getPlayer()) != null) {
+			Main.getSetupOf(event.getPlayer()).clear(false);
+		}
+		
 	}
 }

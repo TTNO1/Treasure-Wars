@@ -8,7 +8,7 @@ import org.bukkit.inventory.EquipmentSlot;
 
 public class MainPlayerInteractEntityListener implements Listener{
 	
-	@EventHandler
+	@EventHandler (ignoreCancelled = true)
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
 		if(event.getRightClicked() instanceof Villager) {
 			if(event.getHand().equals(EquipmentSlot.HAND)) {

@@ -8,7 +8,7 @@ public class BlockBreakListener implements Listener{
 	
 	private Game game;
 	
-	BlockBreakListener(Game game){
+	public BlockBreakListener(Game game){
 		this.game = game;
 	}
 	

@@ -74,6 +74,7 @@ public class Game {
 	private BukkitRunnable timeTask;
 	private HashMap<Player, GameTeam> teamSelection;
 	private ArrayList<TreasureAreaInteractListener> treasureAreaListeners;
+	private ArrayList<Dissolver> dissolvers;
 	
 	@SuppressWarnings("unchecked")
 	Game(String name){
@@ -103,6 +104,7 @@ public class Game {
 		lobbyEntity = (LobbyEntity) config.get("lobbyEntity");
 		teamSelection = new HashMap<Player, GameTeam>();
 		treasureAreaListeners = new ArrayList<TreasureAreaInteractListener>();
+		dissolvers = new ArrayList<Dissolver>();
 		
 		if(config.isSet("ores")) {
 			ores = (ArrayList<Ore>) config.get("ores");
@@ -148,6 +150,7 @@ public class Game {
 		listenerClasses.add(PlayerMoveListener.class);
 		listenerClasses.add(RespawnListener.class);
 		listenerClasses.add(EntitySpawnListener.class);
+		listenerClasses.add(CraftListener.class);
 		
 	}
 	
@@ -217,6 +220,22 @@ public class Game {
 	
 	public ArrayList<TreasureAreaInteractListener> getTreasureAreaListeners() {
 		return treasureAreaListeners;
+	}
+	
+	public ArrayList<Dissolver> getDissolvers() {
+		return dissolvers;
+	}
+	
+	public Dissolver getDissolverOf(Block block) {
+		
+		for(Dissolver dissolver : dissolvers) {
+			if(dissolver.getBlock().equals(block)) {
+				return dissolver;
+			}
+		}
+		
+		return null;
+		
 	}
 	
 	public TreasureAreaInteractListener getTreasureAreaListenerOf(Player player) {
@@ -290,12 +309,12 @@ public class Game {
 		queueObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
 		
 		queueObjective.getScore(" ").setScore(7);
-		queueObjective.getScore("Players: " + Integer.toString(players.size()) + "/" + Integer.toString(maxPlayers)).setScore(6);
+		queueObjective.getScore("Players: " + ChatColor.GREEN + Integer.toString(players.size()) + "/" + Integer.toString(maxPlayers)).setScore(6);
 		queueObjective.getScore("  ").setScore(5);
-		queueObjective.getScore("Map: " + world.getName()).setScore(4);
+		queueObjective.getScore("Map: " + ChatColor.YELLOW + world.getName()).setScore(4);
 		queueObjective.getScore("   ").setScore(3);
-		queueObjective.getScore("Teams: " + Integer.toString(teams.size())).setScore(2);
-		queueObjective.getScore("Team Size: " + Integer.toString(playersPerTeam) + " Players").setScore(1);
+		queueObjective.getScore("Teams: " + ChatColor.GREEN + Integer.toString(teams.size())).setScore(2);
+		queueObjective.getScore("Team Size: " + ChatColor.GREEN + Integer.toString(playersPerTeam)).setScore(1);
 		queueObjective.getScore("    ").setScore(0);
 		
 		for(Player boardPlayer : players) {
@@ -397,13 +416,19 @@ public class Game {
 					}
 				}
 				
-				if(teamSelection.get(player).equals(team)) {
-					inventory.setItem(i, Utils.customItem(Material.valueOf(team.getColor().toUpperCase() + "_WOOL"), 1, team.getName() + ChatColor.GRAY + " You", Utils.lore("", "Players: " + Integer.toString(playerCount) + "/" + Integer.toString(playersPerTeam), "", ChatColor.GRAY + "Click to Join"), Enchantment.PROTECTION_ENVIRONMENTAL, 1, null, true, true));
-				}else {
-					inventory.setItem(i, Utils.customItem(Material.valueOf(team.getColor().toUpperCase() + "_WOOL"), 1, team.getName(), Utils.lore("", "Players: " + Integer.toString(playerCount) + "/" + Integer.toString(playersPerTeam), "", ChatColor.GRAY + "Click to Join"), null, 0, null, true, false));
+				ItemStack item = Utils.customItem(Material.valueOf(team.getColor().toUpperCase() + "_WOOL"), 1, team.getName(), Utils.lore("", "Players: " + Integer.toString(playerCount) + "/" + Integer.toString(playersPerTeam), "", ChatColor.GRAY + "Click to Join"), null, 0, null, true, true);
+				
+				if(teamSelection.get(player) != null) {
+					if(teamSelection.get(player).equals(team)) {
+						item.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+					}
 				}
 				
+				inventory.setItem(i, item);
+				
 			}
+			
+			player.openInventory(inventory);
 			
 		}else {
 			
@@ -421,12 +446,14 @@ public class Game {
 			return ChatColor.DARK_PURPLE + "Please wait for the game to end ...";
 		case DISABLED:
 			state = GameState.QUEUE;
+			lobbyEntity.updateStatus();
 			return ChatColor.GREEN + "The game has been un-disabled.";
 		case QUEUE:
 			for(Player player : players) {
 				leaveGame(player);
 			}
 			state = GameState.DISABLED;
+			lobbyEntity.updateStatus();
 			return ChatColor.GREEN + "The game has been disabled.";
 		case RESETING:
 			return ChatColor.DARK_PURPLE + "Please wait for the game to reset, then try again.";
@@ -497,6 +524,7 @@ public class Game {
 			}else if(state.equals(GameState.QUEUE)) {
 				
 				players.remove(player);
+				teamSelection.remove(player);
 				player.getInventory().clear();
 				player.teleport(lobbyLocation.toLocation());
 				queueScoreboard();
@@ -563,6 +591,9 @@ public class Game {
 		
 		for(Player player : players) {
 			
+			kills.put(player, 0);
+			pointsEarned.put(player, 0);
+			
 			Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
 			Objective objective = scoreboard.registerNewObjective("scoreboard", "dummy", ChatColor.BOLD + "" + ChatColor.GOLD + "Treasure Wars");
 			objective.setDisplaySlot(DisplaySlot.SIDEBAR);
@@ -609,6 +640,8 @@ public class Game {
 			player.getEquipment().setChestplate(chestplate);
 			
 			player.getInventory().addItem(new ItemStack(Material.WOODEN_SWORD, 1));
+			
+			player.getInventory().addItem(new ItemStack(Material.IRON_INGOT, Main.getPlugin().getConfig().getInt("startingIron")));
 			
 			player.setHealth(20);
 			
@@ -708,20 +741,32 @@ public class Game {
 		}
 		
 		for(EyeOfSaline eye : eyesOfSaline) {
-			eye.clear();
+			eye.cancel();
 		}
 		
 		for(ZombiePigman pigman : zombiePigmans) {
-			pigman.clear();
+			pigman.cancel();
 		}
 		
 		for(Compass compass : compasses) {
-			compass.clear();
+			compass.cancel();
 		}
 		
 		for(Drowner drowner : drowners) {
-			drowner.clear();
+			drowner.cancel();
 		}
+		
+		for(Dissolver dissolver : dissolvers) {
+			dissolver.cancel();
+		}
+		
+		drowners.clear();
+		compasses.clear();
+		zombiePigmans.clear();
+		eyesOfSaline.clear();
+		dissolvers.clear();
+		
+		teamSelection.clear();
 		
 		lootCooldown.clear();
 		
@@ -837,7 +882,7 @@ public class Game {
 		}
 		
 		if(isColor) {
-			teams.add(new GameTeam(name, color.toUpperCase(), this));
+			teams.add(new GameTeam(name, color.toUpperCase(), this, null, null));
 			config.set("teams", teams);
 			saveConfig();
 			return ChatColor.GREEN + "Team created successfully.";

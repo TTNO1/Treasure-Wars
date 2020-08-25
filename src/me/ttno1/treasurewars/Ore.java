@@ -70,14 +70,14 @@ public class Ore implements ConfigurationSerializable{
 		HashMap<String, Object> serializeMap = new HashMap<String, Object>();
 		serializeMap.put("type", type.toString());
 		serializeMap.put("game", game.getName());
-		serializeMap.put("location", location.serialize());
+		serializeMap.put("location", location);
 		return serializeMap;
 		
 	}
 	
 	public static Ore deserialize(Map<String, Object> map){
 		
-		return new Ore((LazyLocation) map.get("location"), (Material) map.get("type"), Main.getGame((String) map.get("game")));
+		return new Ore((LazyLocation) map.get("location"), Material.valueOf((String) map.get("type")), Main.getGame((String) map.get("game")));
 		
 	}
 	

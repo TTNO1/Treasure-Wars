@@ -29,6 +29,7 @@ public class MainCommandTabComplete implements TabCompleter {
 		commandList.add("joingame");
 		commandList.add("startgame");
 		commandList.add("disablegame");
+		commandList.add("leavegame");
 		commandList.add("help");
 		commandList.add("setup");
 	}

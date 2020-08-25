@@ -36,7 +36,7 @@ public class Setup{
 			}
 		};
 		
-		timeout.runTaskLater(Main.getPlugin(), 6000);
+		timeout.runTaskLater(Main.getPlugin(), 12000);
 		
 	}
 	
@@ -112,7 +112,7 @@ public class Setup{
 			sendStep("To register an ore in Treasure Wars, use the command below to toggle \"Ore Place Mode\". When in \"Ore Place Mode\" any ores that you place will be registered in the game as ores that a player can collect.", "/tw oreplacemode [Game Name]");
 			break;
 		case 13 :
-			player.sendMessage(ChatColor.DARK_PURPLE + "------------------");
+			player.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.STRIKETHROUGH + "                        ");
 			player.sendMessage(ChatColor.UNDERLINE + "Other Useful Commands");
 			player.sendMessage("/tw joingame [Game Name] - Joins the specified game.");
 			player.sendMessage("/tw startgame [Game Name] - Force starts the specified game.");
@@ -120,8 +120,8 @@ public class Setup{
 			player.sendMessage("/tw leavegame [Game Name] - Leaves the specified game.");
 			player.sendMessage("/tw updateworld [Game Name] - Saves the current state of the game's world to be what it resets to after the game finishes.");
 			player.sendMessage(ChatColor.DARK_PURPLE + "------------------");
-			player.sendMessage(cancel + "        " + next);
-			player.sendMessage(ChatColor.DARK_PURPLE + "------------------");
+			player.spigot().sendMessage(next, new TextComponent(ChatColor.RESET + "        "), cancel);
+			player.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.STRIKETHROUGH + "                        ");
 			break;
 		case 14 :
 			player.sendMessage(ChatColor.GREEN + "Setup has ended.");

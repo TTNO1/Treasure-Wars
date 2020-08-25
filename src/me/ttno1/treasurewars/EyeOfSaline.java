@@ -50,10 +50,16 @@ public class EyeOfSaline {
 		
 	}
 	
-	public void clear() {
+	public void cancel() {
 		
 		task.cancel();
 		enderEye.setDespawnTimer(81);
+		
+	}
+	
+	public void clear() {
+		
+		cancel();
 		game.getEyesOfSaline().remove(this);
 		
 	}

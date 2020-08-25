@@ -11,7 +11,7 @@ public class DeathListener implements Listener {
 
 	private Game game;
 	
-	DeathListener(Game game) {
+	public DeathListener(Game game) {
 		
 		this.game = game;
 		

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
@@ -21,6 +22,7 @@ public class Captain implements ConfigurationSerializable{
 	private String name;
 	private LazyLocation location;
 	private Villager villager;
+	private static Profession captainProfession = Profession.valueOf(Main.getPlugin().getConfig().getString("captainProfession").toUpperCase());
 	
 	Captain(LazyLocation location, String name){
 		
@@ -38,7 +40,7 @@ public class Captain implements ConfigurationSerializable{
 	protected void spawn() {
 		
 		villager = (Villager) location.getWorld().spawnEntity(location.toLocation(), EntityType.VILLAGER);
-		villager.setProfession(Profession.valueOf(Main.getPlugin().getConfig().getString("captainProfession")));
+		villager.setProfession(captainProfession);
 		villager.setInvulnerable(true);
 		villager.addPotionEffect(Utils.slowness);
 		villager.setCollidable(false);
@@ -63,15 +65,14 @@ public class Captain implements ConfigurationSerializable{
 		
 		HashMap<String, Object> serializeMap = new HashMap<String, Object>();
 		serializeMap.put("name", name);
-		serializeMap.put("location", location.serialize());
+		serializeMap.put("location", location);
 		return serializeMap;
 		
 	}
 	
 	//GUI
 	
-	@SuppressWarnings("unchecked")
-	protected final static HashMap<String, Integer> prices = (HashMap<String, Integer>) Main.getPlugin().getConfig().get("captain");
+	protected final static MemorySection prices = (MemorySection) Main.getPlugin().getConfig().get("captain");
 	
 	public static void openGui(Player player, GameTeam team) {
 		
@@ -115,6 +116,8 @@ public class Captain implements ConfigurationSerializable{
 		case FORTUNE:
 			if(upgradeLevel == 1) {
 				lore.add(ChatColor.GREEN + "Unlocked");
+			}else {
+				lore.add(ChatColor.GRAY + "Cost: " + ChatColor.AQUA + Integer.toString(prices.getInt("fortune1")) + " Diamonds");
 			}
 			break;
 		case EFFICIENCY:
@@ -122,7 +125,7 @@ public class Captain implements ConfigurationSerializable{
 				if(upgradeLevel >= i) {
 					lore.add(ChatColor.GRAY + "Efficiency " + Integer.toString(i) + ChatColor.GREEN + " Unlocked");
 				}else {
-					lore.add(ChatColor.GRAY + "Efficiency " + Integer.toString(i) + " Cost: " + ChatColor.AQUA + prices.get("efficiency" + Integer.toString(i)) + " Diamonds");
+					lore.add(ChatColor.GRAY + "Efficiency " + Integer.toString(i) + " Cost: " + ChatColor.AQUA + Integer.toString(prices.getInt("efficiency" + Integer.toString(i))) + " Diamonds");
 				}
 			}
 			break;
@@ -131,7 +134,7 @@ public class Captain implements ConfigurationSerializable{
 				if(upgradeLevel >= i) {
 					lore.add(ChatColor.GRAY + Integer.toString(i * 25) + "% More Loot " + ChatColor.GREEN + " Unlocked");
 				}else {
-					lore.add(ChatColor.GRAY + Integer.toString(i * 25) + "% More Loot " + " Cost: " + ChatColor.AQUA + prices.get("looting" + Integer.toString(i)) + " Diamonds");
+					lore.add(ChatColor.GRAY + Integer.toString(i * 25) + "% More Loot " + " Cost: " + ChatColor.AQUA + Integer.toString(prices.getInt("looting" + Integer.toString(i))) + " Diamonds");
 				}
 			}
 			break;
@@ -140,7 +143,7 @@ public class Captain implements ConfigurationSerializable{
 				if(upgradeLevel >= i) {
 					lore.add(ChatColor.GRAY + "Protection " + Integer.toString(i) + ChatColor.GREEN + " Unlocked");
 				}else {
-					lore.add(ChatColor.GRAY + "Protection " + Integer.toString(i) + " Cost: " + ChatColor.AQUA + prices.get("protection" + Integer.toString(i)) + " Diamonds");
+					lore.add(ChatColor.GRAY + "Protection " + Integer.toString(i) + " Cost: " + ChatColor.AQUA + Integer.toString(prices.getInt("protection" + Integer.toString(i))) + " Diamonds");
 				}
 			}
 			break;
@@ -149,7 +152,7 @@ public class Captain implements ConfigurationSerializable{
 				if(upgradeLevel >= i) {
 					lore.add(ChatColor.GRAY + "Sharpness " + Integer.toString(i) + ChatColor.GREEN + " Unlocked");
 				}else {
-					lore.add(ChatColor.GRAY + "Sharpness " + Integer.toString(i) + " Cost: " + ChatColor.AQUA + prices.get("sharpness" + Integer.toString(i)) + " Diamonds");
+					lore.add(ChatColor.GRAY + "Sharpness " + Integer.toString(i) + " Cost: " + ChatColor.AQUA + Integer.toString(prices.getInt("sharpness" + Integer.toString(i))) + " Diamonds");
 				}
 			}
 			break;

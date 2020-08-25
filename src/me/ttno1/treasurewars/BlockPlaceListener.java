@@ -11,7 +11,7 @@ public class BlockPlaceListener implements Listener{
 	
 	private Game game;
 	
-	BlockPlaceListener(Game game){
+	public BlockPlaceListener(Game game){
 		this.game = game;
 	}
 	
@@ -24,6 +24,10 @@ public class BlockPlaceListener implements Listener{
 			if(event.getBlock().getType().equals(Material.TNT)) {
 				event.getBlock().getWorld().spawnEntity(event.getBlock().getLocation(), EntityType.PRIMED_TNT);
 				event.setCancelled(true);
+			}
+			
+			if(event.getBlock().getType().toString().endsWith("WOOL")) {
+				
 			}
 			
 		}

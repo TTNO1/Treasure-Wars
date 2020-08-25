@@ -34,7 +34,7 @@ public class RespawnListener implements Listener {
 		keepItems.add(Material.TURTLE_HELMET);
 	}
 	
-	RespawnListener(Game game) {
+	public RespawnListener(Game game) {
 		
 		this.game = game;
 		

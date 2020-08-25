@@ -19,6 +19,7 @@ public class MainInventoryClickListener implements Listener{
 						if(event.getSlot() == i) {
 							game.getTeamSelection().put(player, team);
 							player.closeInventory();
+							break;
 						}
 					}
 					event.setCancelled(true);

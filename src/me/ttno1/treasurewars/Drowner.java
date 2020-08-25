@@ -44,9 +44,15 @@ public class Drowner {
 		return player;
 	}
 	
-	public void clear() {
+	public void cancel() {
 		
 		task.cancel();
+		
+	}
+	
+	public void clear() {
+		
+		cancel();
 		game.getDrowners().remove(this);
 		
 	}
